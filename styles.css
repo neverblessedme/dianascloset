@@ -1,0 +1,1284 @@
+/* Diana's Closet - Cay co. palette */
+
+:root {
+  /* Cay co. palette */
+  --graphite: #454641;
+  --leather: #0E1617;
+  --mist: #DCDDE1;
+  --palo-santo: #7C7C77;
+  --smoke: #ACAEB1;
+  /* Mapped to theme */
+  --black: var(--leather);
+  --charcoal: var(--graphite);
+  --slate: var(--palo-santo);
+  --olive: var(--graphite);
+  --mustard: var(--smoke);
+  --mustard-dim: var(--palo-santo);
+  --rust: var(--palo-santo);
+  --faded-red: var(--palo-santo);
+  --dirty-white: var(--mist);
+  --cream: var(--smoke);
+  --ink: var(--leather);
+  /* For rgba glows/borders (smoke = 172,174,177; palo santo = 124,124,119; leather = 14,22,23; mist = 220,221,225) */
+  --font-body: 'Libre Baskerville', Georgia, serif;
+  --font-cursive: 'Dancing Script', cursive;
+  --radius: 4px;
+  --radius-sm: 2px;
+  --shadow: 0 4px 20px rgba(14, 22, 23, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 300;
+  background: var(--charcoal);
+  min-height: 100vh;
+  color: var(--dirty-white);
+  position: relative;
+  overflow-x: hidden;
+  text-transform: lowercase;
+}
+
+/* Grungy background - dark + subtle noise */
+.bg-pattern {
+  position: fixed;
+  inset: 0;
+  background:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #454641 0%, #2d3234 50%, #0E1617 100%);
+  pointer-events: none;
+  z-index: 0;
+  animation: bg-drift 20s ease-in-out infinite;
+}
+
+@keyframes bg-drift {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.98; }
+}
+
+/* Header - left-aligned, cursive, lines up with main */
+.header {
+  padding: 1.5rem 0;
+  position: relative;
+  z-index: 2;
+  border-bottom: 1px solid rgba(124, 124, 119, 0.4);
+}
+
+.header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  text-align: left;
+}
+
+.logo {
+  font-family: var(--font-cursive);
+  font-size: clamp(1.6rem, 4vw, 2rem);
+  font-weight: 600;
+  color: var(--dirty-white);
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.tagline {
+  font-size: 0.8rem;
+  color: var(--mustard-dim);
+  margin-top: 0.2rem;
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+/* Ginger pixel-art walk bar */
+.ginger-walk-bar {
+  position: relative;
+  height: 56px;
+  border-bottom: 2px solid rgba(124, 124, 119, 0.5);
+  overflow-x: hidden;
+  overflow-y: visible;
+  z-index: 50;
+  background: rgba(14, 22, 23, 0.7);
+}
+
+.ginger-walk {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  animation: ginger-walk 18s linear infinite;
+  cursor: default;
+  z-index: 10;
+}
+
+.ginger-walk:hover .ginger-nametag {
+  opacity: 1;
+}
+
+.ginger-pixel {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  border-radius: 4px;
+  box-shadow: 0 0 12px rgba(172, 174, 177, 0.4), 0 0 24px rgba(172, 174, 177, 0.2);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  flex-shrink: 0;
+}
+
+.ginger-walk:hover .ginger-pixel {
+  animation: ginger-bounce 0.5s ease infinite;
+}
+
+@keyframes ginger-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.ginger-nametag {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--dirty-white);
+  text-transform: lowercase;
+  letter-spacing: 0.12em;
+  background: var(--black);
+  padding: 3px 10px;
+  border-radius: 0;
+  border: 1px solid var(--mustard-dim);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  box-shadow: none;
+  flex-shrink: 0;
+  /* ASCII / terminal aesthetic */
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes ginger-walk {
+  0% { left: -60px; }
+  100% { left: 100%; }
+}
+
+/* Main layout - everything lowercase except .logo */
+.main,
+.main .card,
+.main input,
+.main select,
+.main button,
+.main label,
+.main p,
+.modal,
+.modal .modal-content,
+.modal input,
+.modal button,
+.modal label,
+.modal p,
+.footer,
+.footer p {
+  text-transform: lowercase;
+}
+
+.main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.main .card {
+  animation: card-in 0.6s ease-out backwards;
+}
+
+.main .card:nth-child(1) { animation-delay: 0.05s; }
+.main .card:nth-child(2) { animation-delay: 0.12s; }
+.main .card:nth-child(3) { animation-delay: 0.19s; }
+.main .card:nth-child(4) { animation-delay: 0.26s; }
+.main .card:nth-child(5) { animation-delay: 0.33s; }
+.main .card:nth-child(6) { animation-delay: 0.4s; }
+.main .card:nth-child(7) { animation-delay: 0.47s; }
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Cards - dark, rough, flowy */
+.card {
+  background: rgba(45, 45, 42, 0.9);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(124, 124, 119, 0.3);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(14, 22, 23, 0.4), 0 0 0 1px rgba(124, 124, 119, 0.2);
+}
+
+.card h2 {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  color: var(--mustard);
+  margin-bottom: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+}
+
+/* Add form */
+.add-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.add-form input[type="text"],
+.add-form select {
+  font-family: var(--font-body);
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--slate);
+  background: var(--black);
+  color: var(--dirty-white);
+  font-size: 0.9rem;
+}
+
+.add-form input[type="text"] {
+  flex: 1;
+  min-width: 140px;
+}
+
+.add-form input::placeholder {
+  color: var(--mustard-dim);
+  opacity: 0.9;
+}
+
+.add-form select {
+  cursor: pointer;
+}
+
+.file-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--slate);
+  border-radius: var(--radius-sm);
+  background: var(--black);
+  color: var(--mustard-dim);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.file-label:hover { border-color: var(--mustard-dim); }
+.file-input { display: none; }
+.file-label-text { pointer-events: none; }
+.add-hint {
+  font-size: 0.8rem;
+  color: var(--mustard-dim);
+  opacity: 0.9;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+.btn-sample { margin-top: 0.5rem; }
+/* Buttons */
+.btn {
+  font-family: var(--font-body);
+  font-weight: 400;
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: var(--mustard);
+  color: var(--black);
+}
+
+.btn-primary:hover {
+  background: var(--mist);
+  color: var(--leather);
+}
+
+.btn-secondary {
+  background: var(--slate);
+  color: var(--dirty-white);
+  border: 1px solid var(--mustard-dim);
+}
+
+.btn-secondary:hover {
+  background: var(--olive);
+  color: var(--cream);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--mustard-dim);
+  border: 1px solid var(--mustard-dim);
+}
+
+.btn-ghost:hover {
+  color: var(--mustard);
+  border-color: var(--mustard);
+}
+
+/* Wardrobe filters */
+.wardrobe-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.wardrobe-header h2 {
+  margin-bottom: 0;
+}
+
+.btn-clear-wardrobe {
+  font-size: 0.85rem;
+  padding: 0.4rem 0.85rem;
+}
+
+.wardrobe-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.filter-btn {
+  font-family: var(--font-body);
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--slate);
+  background: var(--black);
+  color: var(--cream);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.filter-btn:hover {
+  transform: translateY(-2px);
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--olive);
+  color: var(--mustard);
+  border-color: var(--mustard-dim);
+}
+
+/* Wardrobe grid - scrap / polaroid style */
+.wardrobe-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  justify-content: flex-start;
+}
+
+.wardrobe-item {
+  position: relative;
+  width: 140px;
+  flex-shrink: 0;
+}
+
+/* Polaroid / scrap photo frame */
+.polaroid {
+  background: var(--dirty-white);
+  padding: 8px 8px 28px 8px;
+  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 0, 0, 0.1);
+  transform: rotate(-1.5deg);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.wardrobe-item:nth-child(3n) .polaroid { transform: rotate(1deg); }
+.wardrobe-item:nth-child(3n + 2) .polaroid { transform: rotate(-2deg); }
+.wardrobe-item:hover .polaroid {
+  transform: rotate(0) scale(1.03);
+  box-shadow: 4px 4px 20px rgba(14, 22, 23, 0.5), 0 0 24px rgba(172, 174, 177, 0.15);
+}
+
+/* Cutout-style photo with glowing outline */
+.polaroid-img-wrap {
+  width: 100%;
+  aspect-ratio: 1;
+  background: transparent;
+  overflow: hidden;
+  display: block;
+  border-radius: 6px;
+  box-shadow:
+    0 0 0 2px rgba(124, 124, 119, 0.5),
+    0 0 16px rgba(172, 174, 177, 0.3),
+    0 0 32px rgba(172, 174, 177, 0.15),
+    inset 0 0 0 1px rgba(220, 221, 225, 0.12);
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+
+.wardrobe-item:hover .polaroid-img-wrap,
+.slot-photo-wrap .polaroid-outfit .polaroid-img-wrap {
+  box-shadow:
+    0 0 0 2px rgba(124, 124, 119, 0.6),
+    0 0 24px rgba(172, 174, 177, 0.4),
+    0 0 48px rgba(172, 174, 177, 0.2);
+}
+
+.polaroid-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.polaroid-img-wrap.no-img {
+  background: var(--slate);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 0 2px rgba(124, 124, 119, 0.4),
+    0 0 12px rgba(172, 174, 177, 0.2);
+}
+.polaroid-img-wrap.no-img::after {
+  content: '📷';
+  font-size: 1.5rem;
+  opacity: 0.5;
+}
+
+.polaroid-caption {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--ink);
+  text-align: center;
+  margin-top: 6px;
+  padding: 0 2px;
+  line-height: 1.2;
+  min-height: 2.2em;
+}
+
+.wardrobe-item .remove-btn {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--charcoal);
+  border: 1px solid var(--mustard-dim);
+  color: var(--dirty-white);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+}
+.wardrobe-item .remove-btn:hover {
+  background: var(--faded-red);
+  border-color: var(--faded-red);
+  color: var(--dirty-white);
+}
+
+/* Outfit builder */
+.outfit-hint {
+  font-size: 0.85rem;
+  color: var(--mustard-dim);
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+/* Outfit visual - vertical stack top to bottom */
+.outfit-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.outfit-slot.vertical {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1rem;
+  background: var(--black);
+  border: 1px solid var(--slate);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  min-height: 200px;
+  transition: border-color 0.35s ease, background 0.35s ease, transform 0.3s ease;
+}
+
+.outfit-slot.vertical:hover {
+  transform: translateX(4px);
+}
+
+.outfit-slot.vertical.filled {
+  border-color: var(--mustard-dim);
+  background: rgba(69, 70, 65, 0.4);
+}
+
+.outfit-slot .slot-label {
+  width: 7rem;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--mustard-dim);
+  text-transform: lowercase;
+  letter-spacing: 0.06em;
+}
+
+.outfit-slot .slot-content {
+  flex: 1;
+  min-height: 200px;
+  margin-bottom: 0;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.outfit-slot .slot-content.empty {
+  justify-content: flex-start;
+}
+
+.outfit-slot .slot-pick-btn {
+  flex-shrink: 0;
+}
+
+.slot-content {
+  min-height: 3.5rem;
+  font-size: 0.8rem;
+  color: var(--dirty-white);
+  margin-bottom: 0.5rem;
+  word-break: break-word;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.slot-content.empty {
+  color: var(--mustard-dim);
+  opacity: 0.7;
+  font-style: italic;
+  justify-content: center;
+}
+
+/* Outfit slot photocards = same as wardrobe (cutout + glow), bigger version */
+.slot-photo-wrap .polaroid-outfit {
+  width: 140px;
+  flex-shrink: 0;
+  background: var(--dirty-white);
+  padding: 8px 8px 28px 8px;
+  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 0, 0, 0.1);
+  transform: rotate(-1deg);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.slot-photo-wrap .polaroid-outfit .polaroid-img-wrap {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  box-shadow:
+    0 0 0 2px rgba(124, 124, 119, 0.5),
+    0 0 16px rgba(172, 174, 177, 0.3),
+    0 0 32px rgba(172, 174, 177, 0.15),
+    inset 0 0 0 1px rgba(220, 221, 225, 0.12);
+  transition: box-shadow 0.4s ease;
+}
+.slot-photo-wrap .polaroid-outfit img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.slot-photo-wrap .polaroid-outfit .polaroid-caption {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--ink);
+  text-align: center;
+  margin-top: 6px;
+  padding: 0 2px;
+  line-height: 1.2;
+  min-height: 2.2em;
+}
+
+/* Multi-item slots: accessories & outerwear */
+.slot-photo-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.slot-item-entry {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.slot-remove-btn {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--charcoal);
+  border: 1px solid var(--mustard-dim);
+  color: var(--dirty-white);
+  cursor: pointer;
+  font-size: 0.85rem;
+  line-height: 1;
+  padding: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+}
+.slot-remove-btn:hover {
+  background: var(--faded-red);
+  border-color: var(--faded-red);
+  color: var(--dirty-white);
+}
+
+/* Drag and drop */
+.wardrobe-item[draggable="true"] {
+  cursor: grab;
+}
+.wardrobe-item.dragging {
+  opacity: 0.6;
+  cursor: grabbing;
+}
+.outfit-slot.drop-target {
+  border-color: var(--mustard);
+  background: rgba(124, 124, 119, 0.25);
+  box-shadow: 0 0 0 2px var(--mustard-dim);
+}
+
+.slot-pick-btn {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--mustard-dim);
+  background: transparent;
+  color: var(--mustard-dim);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.slot-pick-btn:hover {
+  background: var(--mustard-dim);
+  color: var(--black);
+}
+
+.outfit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.outfit-name-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(124, 124, 119, 0.35);
+}
+
+.outfit-name-section label {
+  font-size: 0.9rem;
+  color: var(--mustard-dim);
+}
+
+.outfit-name-section input {
+  font-family: var(--font-body);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--slate);
+  background: var(--black);
+  color: var(--dirty-white);
+  font-size: 0.9rem;
+  min-width: 160px;
+}
+
+.outfit-name-section input::placeholder {
+  color: var(--mustard-dim);
+  opacity: 0.8;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Saved outfits */
+.saved-outfits {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.saved-outfit {
+  background: var(--black);
+  border: 1px solid var(--slate);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.saved-outfit:hover {
+  border-color: var(--mustard-dim);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.saved-outfit-photos {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.saved-photo-thumb {
+  width: 36px;
+  height: 36px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--slate);
+  display: inline-block;
+  border: 1px solid var(--mustard-dim);
+}
+.saved-photo-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.saved-photo-thumb.no-img {
+  background: var(--slate);
+}
+
+.saved-outfit-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.saved-outfit-name {
+  font-weight: 400;
+  color: var(--dirty-white);
+  font-size: 0.95rem;
+}
+
+.saved-outfit-items {
+  font-size: 0.8rem;
+  color: var(--mustard-dim);
+  font-style: italic;
+}
+
+.saved-outfit-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.saved-outfit-actions button {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.saved-outfit-actions .wear-btn {
+  background: var(--mustard);
+  color: var(--black);
+}
+
+.saved-outfit-actions .wear-btn:hover {
+  background: var(--mist);
+  color: var(--leather);
+}
+
+.saved-outfit-actions .delete-btn {
+  background: transparent;
+  color: var(--faded-red);
+  border: 1px solid var(--faded-red);
+}
+
+.saved-outfit-actions .delete-btn:hover {
+  background: rgba(124, 124, 119, 0.25);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: var(--mustard-dim);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(14, 22, 23, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: var(--charcoal);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  max-width: 360px;
+  width: 100%;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--mustard-dim);
+}
+
+.modal-content h3 {
+  font-family: var(--font-body);
+  color: var(--mustard);
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+}
+
+.modal-options {
+  max-height: 320px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.modal-option {
+  font-family: var(--font-body);
+  padding: 0;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--slate);
+  background: var(--black);
+  color: var(--dirty-white);
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.85rem;
+  transition: transform 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  overflow: hidden;
+}
+.modal-option img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--slate);
+}
+.modal-option .modal-option-label { padding: 0.5rem 0.75rem 0.5rem 0; }
+.modal-option:hover {
+  border-color: var(--mustard-dim);
+  color: var(--mustard);
+  transform: translateX(4px);
+}
+.modal-option .modal-option-placeholder {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  background: var(--slate);
+  display: block;
+}
+
+.modal-close {
+  width: 100%;
+}
+
+/* Clear wardrobe confirm modal (in-site aesthetic) */
+.confirm-modal-content {
+  max-width: 340px;
+}
+
+.confirm-modal-content h3 {
+  margin-bottom: 0.75rem;
+}
+
+.confirm-modal-message {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--cream);
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+.confirm-modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+/* Pinterest link help popup */
+.pinterest-help-content {
+  max-width: 420px;
+}
+
+.pinterest-help-text {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--cream);
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.pinterest-help-img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--slate);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.pinterest-help-content .modal-close {
+  margin-top: 0;
+}
+
+.btn-clear-confirm {
+  background: var(--palo-santo);
+  color: var(--mist);
+  border: 1px solid var(--smoke);
+}
+
+.btn-clear-confirm:hover {
+  background: var(--slate);
+  color: var(--dirty-white);
+}
+
+/* Poof animation when clearing wardrobe (bottom-to-top, no stutter) */
+.wardrobe-item.poof {
+  animation: wardrobe-poof 0.5s ease-out forwards;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+@keyframes wardrobe-poof {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  20% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  color: var(--mustard-dim);
+  font-size: 0.85rem;
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid rgba(124, 124, 119, 0.35);
+  text-transform: lowercase;
+}
+
+.footer-dog {
+  height: 1em;
+  width: auto;
+  max-height: 20px;
+  object-fit: contain;
+  border-radius: 4px;
+  opacity: 0.9;
+  transition: transform 0.3s ease;
+}
+
+.footer-dog:hover {
+  transform: scale(1.15);
+}
+
+.footer-heart {
+  display: inline;
+  font-style: normal;
+}
+
+/* Mood board */
+.moodboard-hint {
+  font-size: 0.85rem;
+  color: var(--mustard-dim);
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+/* Pinterest search - opens in new tab */
+.pinterest-search {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.pinterest-search input {
+  flex: 1;
+  min-width: 160px;
+  font-family: var(--font-body);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--slate);
+  background: var(--black);
+  color: var(--dirty-white);
+  font-size: 0.9rem;
+}
+
+.pinterest-search input::placeholder {
+  color: var(--mustard-dim);
+  opacity: 0.8;
+}
+
+.moodboard-add-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(124, 124, 119, 0.4);
+}
+
+.moodboard-add-form input[type="text"],
+.moodboard-add-form input[type="url"] {
+  font-family: var(--font-body);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--slate);
+  background: var(--black);
+  color: var(--dirty-white);
+  font-size: 0.85rem;
+  min-width: 120px;
+}
+
+.moodboard-pinterest-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 220px;
+}
+
+.moodboard-pinterest-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.moodboard-help-btn {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  border: 1px solid var(--mustard-dim);
+  background: var(--black);
+  color: var(--mustard-dim);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.moodboard-help-btn:hover {
+  background: var(--mustard-dim);
+  color: var(--black);
+  border-color: var(--mustard-dim);
+}
+
+.moodboard-or {
+  font-size: 0.8rem;
+  color: var(--mustard-dim);
+  font-style: italic;
+}
+
+.moodboard-status {
+  font-size: 0.8rem;
+  color: var(--mustard-dim);
+  font-style: italic;
+  width: 100%;
+  margin: 0;
+}
+
+.moodboard-add-form input[type="url"]:not(.moodboard-pinterest-input) { min-width: 160px; }
+.moodboard-add-form #moodboard-purchase-url { min-width: 200px; }
+
+.moodboard-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.moodboard-item {
+  width: 180px;
+  background: var(--black);
+  border: 1px solid var(--slate);
+  border-radius: var(--radius-sm);
+  overflow: visible;
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.moodboard-item:hover {
+  border-color: var(--mustard-dim);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(14, 22, 23, 0.35), 0 0 20px rgba(172, 174, 177, 0.12);
+}
+
+.moodboard-item-img {
+  width: 100%;
+  aspect-ratio: 1;
+  background: transparent;
+  overflow: hidden;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    box-shadow:
+    0 0 0 2px rgba(124, 124, 119, 0.45),
+    0 0 14px rgba(172, 174, 177, 0.25),
+    0 0 28px rgba(172, 174, 177, 0.12);
+}
+
+.moodboard-item-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.moodboard-item-img.no-img {
+  min-height: 120px;
+  background: var(--slate);
+}
+
+.moodboard-purchase-link {
+  font-size: 0.75rem;
+  color: var(--mustard);
+  text-decoration: underline;
+}
+
+.moodboard-purchase-link:hover {
+  color: var(--cream);
+}
+
+.moodboard-item-info {
+  padding: 0.6rem 0.75rem;
+}
+
+.moodboard-item-name {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--dirty-white);
+  margin-bottom: 0.5rem;
+  word-break: break-word;
+}
+
+.moodboard-where-to-buy {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.4rem;
+}
+
+.moodboard-where-to-buy a,
+.moodboard-where-to-buy button {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
+  border: 1px solid var(--mustard-dim);
+  background: transparent;
+  color: var(--mustard-dim);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.moodboard-where-to-buy a:hover,
+.moodboard-where-to-buy button:hover {
+  background: var(--mustard-dim);
+  color: var(--black);
+}
+
+.moodboard-item .remove-mood-btn {
+  background: none;
+  border: none;
+  color: var(--mustard-dim);
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0.25rem 0;
+  opacity: 0.8;
+}
+
+.moodboard-item .remove-mood-btn:hover {
+  color: var(--faded-red);
+}
+
+/* Color dots for categories - muted grungy */
+.dot-tops { background: var(--mustard-dim); }
+.dot-bottoms { background: var(--slate); }
+.dot-shoes { background: var(--rust); }
+.dot-accessories { background: var(--mustard); }
+.dot-outerwear { background: var(--faded-red); }

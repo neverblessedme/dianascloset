@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diana's Closet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,300;0,400;0,700;1,400&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-pattern"></div>
+
+  <header class="header">
+    <div class="header-inner">
+      <h1 class="logo">Diana's Closet</h1>
+      <p class="tagline">mix + match your wardrobe</p>
+    </div>
+  </header>
+
+  <!-- Ginger pixel-art walk -->
+  <div class="ginger-walk-bar">
+    <div class="ginger-walk" aria-hidden="true">
+      <img src="assets/ginger.png" alt="Ginger" class="ginger-pixel">
+      <span class="ginger-nametag">ginger</span>
+    </div>
+  </div>
+
+  <main class="main">
+    <!-- Add to wardrobe -->
+    <section class="card add-card">
+      <h2>add to my closet</h2>
+      <form id="add-item-form" class="add-form">
+        <input type="text" id="item-name" placeholder="e.g. pink crop top" required>
+        <select id="item-category">
+          <option value="tops">tops</option>
+          <option value="bottoms">bottoms</option>
+          <option value="shoes">shoes</option>
+          <option value="accessories">accessories</option>
+          <option value="outerwear">outerwear</option>
+        </select>
+        <select id="item-color">
+          <option value="pink">pink</option>
+          <option value="purple">purple</option>
+          <option value="blue">blue</option>
+          <option value="silver">silver</option>
+          <option value="white">white</option>
+          <option value="black">black</option>
+          <option value="green">green</option>
+          <option value="yellow">yellow</option>
+          <option value="orange">orange</option>
+          <option value="red">red</option>
+          <option value="other">other</option>
+        </select>
+        <label class="file-label">
+          <span class="file-label-text">photo</span>
+          <input type="file" id="item-photo" accept="image/*" class="file-input">
+        </label>
+        <button type="submit" class="btn btn-primary">add to closet</button>
+      </form>
+      <p class="add-hint">optional: add a photo of the item.</p>
+      <button type="button" id="add-sample-clothes" class="btn btn-ghost btn-sample">load sample clothes</button>
+    </section>
+
+    <!-- My wardrobe -->
+    <section class="card wardrobe-card">
+      <div class="wardrobe-header">
+        <h2>my wardrobe</h2>
+        <button type="button" id="clear-wardrobe-btn" class="btn btn-ghost btn-clear-wardrobe">clear all</button>
+      </div>
+      <div class="wardrobe-filters">
+        <button class="filter-btn active" data-filter="all">all</button>
+        <button class="filter-btn" data-filter="tops">tops</button>
+        <button class="filter-btn" data-filter="bottoms">bottoms</button>
+        <button class="filter-btn" data-filter="shoes">shoes</button>
+        <button class="filter-btn" data-filter="accessories">accessories</button>
+        <button class="filter-btn" data-filter="outerwear">outerwear</button>
+      </div>
+      <div id="wardrobe-grid" class="wardrobe-grid"></div>
+    </section>
+
+    <!-- Outfit builder - vertical top to bottom -->
+    <section class="card outfit-card">
+      <h2>create an outfit</h2>
+      <p class="outfit-hint">drag items from your wardrobe into each section, or use pick. add multiple accessories and outerwear.</p>
+      <div class="outfit-visual">
+        <div class="outfit-slot vertical" data-slot="tops">
+          <span class="slot-label">1. top</span>
+          <div class="slot-content slot-photo-wrap" id="slot-tops"></div>
+          <button class="slot-pick-btn" data-slot="tops">pick</button>
+        </div>
+        <div class="outfit-slot vertical" data-slot="bottoms">
+          <span class="slot-label">2. bottom</span>
+          <div class="slot-content slot-photo-wrap" id="slot-bottoms"></div>
+          <button class="slot-pick-btn" data-slot="bottoms">pick</button>
+        </div>
+        <div class="outfit-slot vertical" data-slot="shoes">
+          <span class="slot-label">3. shoes</span>
+          <div class="slot-content slot-photo-wrap" id="slot-shoes"></div>
+          <button class="slot-pick-btn" data-slot="shoes">pick</button>
+        </div>
+        <div class="outfit-slot vertical" data-slot="accessories">
+          <span class="slot-label">4. accessories</span>
+          <div class="slot-content slot-photo-wrap" id="slot-accessories"></div>
+          <button class="slot-pick-btn" data-slot="accessories">pick</button>
+        </div>
+        <div class="outfit-slot vertical" data-slot="outerwear">
+          <span class="slot-label">5. outerwear</span>
+          <div class="slot-content slot-photo-wrap" id="slot-outerwear"></div>
+          <button class="slot-pick-btn" data-slot="outerwear">pick</button>
+        </div>
+      </div>
+      <div class="outfit-actions">
+        <button id="random-outfit" class="btn btn-secondary">random outfit</button>
+        <button id="clear-outfit" class="btn btn-ghost">clear</button>
+      </div>
+      <div id="outfit-name-section" class="outfit-name-section hidden">
+        <label for="outfit-name">name this outfit</label>
+        <input type="text" id="outfit-name" placeholder="e.g. saturday brunch">
+        <button id="save-outfit" class="btn btn-primary">save outfit</button>
+      </div>
+    </section>
+
+    <!-- Saved outfits -->
+    <section class="card saved-card">
+      <h2>saved outfits</h2>
+      <div id="saved-outfits" class="saved-outfits"></div>
+    </section>
+
+    <!-- Mood board / Potential purchases -->
+    <section class="card moodboard-card">
+      <h2>mood board & potential purchases</h2>
+      <p class="moodboard-hint">search pinterest for inspo, then add items here. paste a pinterest pin link and we'll pull the image — or add an image url / photo. use the links below to find items on grailed, depop, poshmark, ebay & more.</p>
+      <div class="pinterest-search">
+        <input type="text" id="pinterest-query" placeholder="e.g. vintage levi's, minimal outfits" autocomplete="off">
+        <button type="button" id="pinterest-search-btn" class="btn btn-secondary">search pinterest</button>
+      </div>
+      <form id="moodboard-add-form" class="moodboard-add-form">
+        <input type="text" id="moodboard-name" placeholder="item name" required>
+        <div class="moodboard-pinterest-row">
+          <input type="url" id="moodboard-pinterest-link" placeholder="paste pinterest link" class="moodboard-pinterest-input">
+          <button type="button" id="pinterest-link-help-btn" class="moodboard-help-btn" aria-label="How to copy Pinterest link">?</button>
+        </div>
+        <span class="moodboard-or">or</span>
+        <input type="url" id="moodboard-image-url" placeholder="image url">
+        <label class="file-label">
+          <span class="file-label-text">photo</span>
+          <input type="file" id="moodboard-photo" accept="image/*" class="file-input">
+        </label>
+        <input type="url" id="moodboard-purchase-url" placeholder="purchase link (optional)">
+        <p id="moodboard-status" class="moodboard-status" aria-live="polite"></p>
+        <button type="submit" id="moodboard-submit-btn" class="btn btn-primary">add to mood board</button>
+      </form>
+      <div id="moodboard-grid" class="moodboard-grid"></div>
+    </section>
+  </main>
+
+  <!-- Pick item modal -->
+  <div id="pick-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Choose a <span id="modal-category-label"></span></h3>
+      <div id="modal-options" class="modal-options"></div>
+      <button class="btn btn-ghost modal-close">cancel</button>
+    </div>
+  </div>
+
+  <!-- Pinterest link help popup -->
+  <div id="pinterest-help-modal" class="modal confirm-modal hidden">
+    <div class="modal-content pinterest-help-content">
+      <h3>how to copy the link</h3>
+      <p class="pinterest-help-text">when on pinterest, press the share — copy link, dont copy from URL. thx!!!!!!!</p>
+      <img src="assets/pinterest-share-help.png" alt="Pinterest Share menu with Copy link button" class="pinterest-help-img">
+      <button type="button" id="pinterest-help-close" class="btn btn-ghost modal-close">got it</button>
+    </div>
+  </div>
+
+  <!-- Clear wardrobe confirm (in-site, matches aesthetic) -->
+  <div id="clear-wardrobe-modal" class="modal confirm-modal hidden">
+    <div class="modal-content confirm-modal-content">
+      <h3>clear wardrobe?</h3>
+      <p class="confirm-modal-message">are you sure you want to remove all your clothes from your wardrobe? this cannot be undone.</p>
+      <div class="confirm-modal-actions">
+        <button type="button" id="clear-wardrobe-cancel" class="btn btn-ghost">cancel</button>
+        <button type="button" id="clear-wardrobe-confirm" class="btn btn-clear-confirm">clear all</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <img src="assets/ginger.png" alt="Ginger" class="footer-dog">
+    <p>made with <span class="footer-heart" aria-hidden="true">❤️</span> by yousef, for diana</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
